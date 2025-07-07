@@ -1,0 +1,478 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Domain Selector */
+.domain-selector {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.domain-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.domain-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.domain-btn.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-color: white;
+}
+
+.domain-btn i {
+    margin-right: 8px;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    gap: 30px;
+    height: 70vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* Upload Area */
+.upload-section {
+    margin-bottom: 30px;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.upload-area:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.upload-area.dragover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.upload-area i {
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.upload-area p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+.upload-area span {
+    color: #667eea;
+    font-weight: 600;
+}
+
+#fileInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* PDF List */
+.pdf-list-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-list {
+    flex: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.pdf-item {
+    background: rgba(102, 126, 234, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.pdf-item .filename {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.pdf-item .upload-time {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.no-pdfs {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 40px 20px;
+}
+
+.clear-btn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: #ff3838;
+    transform: translateY(-1px);
+}
+
+/* Chat Container */
+.chat-container {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 25px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.status {
+    background: #2ed573;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status.processing {
+    background: #ffa502;
+}
+
+.status.error {
+    background: #ff4757;
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message {
+    display: flex;
+    max-width: 80%;
+}
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.bot-message {
+    align-self: flex-start;
+}
+
+.message-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.user-message .message-content {
+    flex-direction: row-reverse;
+}
+
+.message i {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.bot-message i {
+    background: #667eea;
+    color: white;
+}
+
+.user-message i {
+    background: #2ed573;
+    color: white;
+}
+
+.text {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.user-message .text {
+    background: #667eea;
+    color: white;
+}
+
+/* Chat Input */
+.chat-input-container {
+    padding: 25px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.chat-input {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#messageInput {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid #e1e5e9;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#messageInput:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#sendBtn {
+    width: 50px;
+    height: 50px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sendBtn:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+}
+
+#sendBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Scrollbar Styling */
+.chat-messages::-webkit-scrollbar,
+.pdf-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track,
+.pdf-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb,
+.pdf-list::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover,
+.pdf-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .main-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .chat-container {
+        height: 60vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .domain-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .domain-btn {
+        width: 250px;
+    }
+
+    .message {
+        max-width: 95%;
+    }
+
+    .chat-input {
+        flex-direction: column;
+    }
+
+    #messageInput {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(102, 126, 234, 0.3);
+    border-radius: 50%;
+    border-top-color: #667eea;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Success/Error Messages */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background: #2ed573;
+}
+
+.notification.error {
+    background: #ff4757;
+}
