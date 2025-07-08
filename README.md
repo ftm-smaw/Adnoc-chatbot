@@ -244,7 +244,11 @@ The industrial color scheme uses:
 2. Create a feature branch
 3. Make your changes
 4. Test thoroughly
-5. Submit a pull requests
+5. Submit a pull request
+
+## License
+
+This project is open source and follows the same license terms as your mental health chatbot project.
 
 ## Support
 
