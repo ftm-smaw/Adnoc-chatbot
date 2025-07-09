@@ -230,7 +230,7 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 
 ## License
 
-This project is licensed under the MIT License.
+This project is open source and follows the same license terms as your mental health chatbot project.
 
 ## Support
 
