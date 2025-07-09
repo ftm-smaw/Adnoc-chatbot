@@ -1,242 +1,224 @@
-# Material Specification Identification Chatbot
+# Material & Electrical Specification Assistant
 
-A comprehensive AI-powered chatbot system for material specification identification, supply chain management, and procurement tracking. Built with Flask, LangChain, and Groq API following the same architecture as your mental health chatbot.
+A Flask-based web application that provides an AI-powered assistant for material and electrical specifications. The application uses advanced natural language processing to help users query and analyze technical documents, specifications, and compliance requirements.
 
 ## Features
 
-### 🏭 Material Management
-- **Material Specification Identification**: AI-powered material classification and identification
-- **Work Order (WO) Tracking**: Complete work order lifecycle management
-- **Material Request (MR) Processing**: Line item tracking with dates and statuses
-- **Purchase Request (PR) Workflows**: Buyer assignment and approval tracking
-- **Request for Quotation (RFQ)**: Supplier quotation management
-- **Delivery Status Tracking**: Real-time delivery and inspection status
+- **Dual Workspace System**: Separate interfaces for material and electrical specifications
+- **AI-Powered Chat Interface**: Interactive chat using LangChain with Groq LLM
+- **Document Processing**: Support for PDF and image uploads with automatic text extraction
+- **Vector Database Search**: ChromaDB integration for intelligent document retrieval
+- **User Authentication**: Secure login system with CSV-based user management
+- **Professional Table Rendering**: Enhanced markdown to HTML conversion with styled tables
+- **PDF Viewer Integration**: Built-in PDF viewing with page-specific references
+- **Real-time Analytics**: Conversation tracking and performance metrics
 
-### 🤖 AI Capabilities
-- **Document Processing**: Automatically processes PDFs, CSVs, and text files from data folder
-- **Intelligent Responses**: Specialized in material standards, procurement procedures, and supply chain
-- **Context-Aware Chat**: Maintains conversation history and provides relevant responses
-- **Quick Actions**: Pre-defined queries for common material management tasks
+## Technology Stack
 
-### 💾 Data Management
-- **SQLite Database**: Stores conversation history and material tracking records
-- **Session Tracking**: User session management with statistics
-- **Real-time Analytics**: Live dashboard with system metrics
-- **Document Storage**: Vector database for efficient document retrieval
+- **Backend**: Flask (Python web framework)
+- **AI/ML**: LangChain, Groq LLM, HuggingFace Transformers
+- **Vector Database**: ChromaDB
+- **Document Processing**: PyMuPDF, Pillow
+- **Frontend**: HTML, CSS, JavaScript
+- **Database**: SQLite
+- **Authentication**: Session-based with CSV storage
 
-### 🎨 Industrial UI Design
-- **Professional Theme**: Industrial blue color scheme optimized for manufacturing environments
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Real-time Status**: Connection status and typing indicators
-- **Dashboard Sidebar**: Quick stats and action buttons
+## Prerequisites
 
-## Quick Start
+- Python 3.8 or higher
+- pip package manager
+- Virtual environment (recommended)
 
-### Prerequisites
-- Python 3.8+
-- Groq API key
+## Installation & Setup
 
-### Installation
+### 1. Clone the Repository
 
-1. **Clone and setup:**
-   ```bash
-   # Make setup script executable
-   chmod +x setup.sh
-   
-   # Run setup
-   ./setup.sh
-   ```
-
-2. **Configure API key:**
-   ```bash
-   # Edit .env file
-   nano .env
-   
-   # Add your Groq API key
-   GROQ_API_KEY=your_actual_groq_api_key_here
-   ```
-
-3. **Add your data:**
-   ```bash
-   # Add your material specification documents to data folder
-   cp your_material_docs.pdf data/
-   cp your_specifications.csv data/
-   ```
-
-4. **Start the chatbot:**
-   ```bash
-   ./start_chatbot.sh
-   ```
-
-5. **Access the interface:**
-   Open http://localhost:5000 in your browser
-
-## Project Structure
-
-```
-material_chatbot_project/
-├── material_chatbot_app.py      # Main Flask application
-├── templates/
-│   └── material_index.html      # Frontend HTML template
-├── data/                        # Document storage for RAG
-│   ├── material_specifications.csv
-│   ├── material_standards.txt
-│   └── procurement_procedures.txt
-├── vectordb/                    # ChromaDB vector storage
-├── logs/                        # Application logs
-├── material_chatbot_env/        # Python virtual environment
-├── requirements.txt             # Python dependencies
-├── .env                         # Environment variables
-├── setup.sh                     # Setup script
-├── start_chatbot.sh            # Startup script
-└── README.md                   # This file
+```bash
+git clone <repository-url>
+cd material-electrical-assistant
 ```
 
-## Usage Examples
+### 2. Create and Activate Virtual Environment
 
-### Material Identification Queries
-- "What is the specification for ASTM A106 steel pipe?"
-- "Show me materials with WO-2024-001"
-- "List all pending material requests"
+```bash
+# Create virtual environment
+python -m venv venv
 
-### Procurement Tracking
-- "What's the status of PR-2024-002?"
-- "Show RFQ timeline for stainless steel materials"
-- "Which materials are delayed in delivery?"
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
 
-### Quality Control
-- "PMI testing requirements for carbon steel"
-- "Material certificate requirements"
-- "Inspection procedures for aluminum alloys"
+# On macOS/Linux:
+source venv/bin/activate
+```
 
-## Technical Architecture
+### 3. Install Requirements
 
-### Backend (Flask + LangChain)
-- **Flask**: Web framework with CORS support
-- **LangChain**: Document processing and retrieval
-- **ChromaDB**: Vector database for embeddings
-- **Groq API**: Language model (llama3-70b-8192)
-- **SQLite**: Local database for tracking
+```bash
+pip install -r requirements.txt
+```
 
-### Frontend (HTML/CSS/JS)
-- **Responsive Design**: Grid layout with sidebar dashboard
-- **Industrial Theme**: Blue/gray color scheme
-- **Real-time Updates**: AJAX for seamless chat experience
-- **Progressive Enhancement**: Works without JavaScript
+### 4. Directory Structure Setup
 
-### Document Processing
-- **Multi-format Support**: PDF, CSV, TXT files
-- **Chunking Strategy**: 500 characters with 50 overlap
-- **Embeddings**: HuggingFace sentence-transformers
-- **Retrieval**: Top-3 relevant chunks for context
+The application will automatically create the following directories when first run:
 
-## Database Schema
+```
+project-root/
+├── data/                     # Material specification documents
+├── electrical_data/          # Electrical specification documents
+├── uploads/
+│   ├── pdf/                 # Uploaded PDF files (material)
+│   ├── images/              # Uploaded images (material)
+│   ├── electrical_pdf/      # Uploaded PDF files (electrical)
+│   └── electrical_images/   # Uploaded images (electrical)
+├── user_data/               # User authentication data
+├── static/                  # Static web assets
+├── templates/               # HTML templates
+├── chroma_db_material/      # ChromaDB vector store (material)
+└── chroma_db_electrical/    # ChromaDB vector store (electrical)
+```
 
-### Conversations Table
-- `id`: Primary key
-- `user_id`: Session identifier
-- `user_message`: User input
-- `bot_response`: AI response
-- `timestamp`: Message time
-- `response_time`: Processing duration
+### 5. Configure API Keys
 
-### Material Records Table
-- `wo_number`: Work Order number
-- `mr_number`: Material Request number
-- `pr_number`: Purchase Request number
-- `rfq_number`: Request for Quotation number
-- `buyer_assigned`: Assigned buyer
-- `delivery_status`: Current status
-- `inspection_status`: Quality control status
+The application uses Groq LLM API. You need to:
+
+1. Get a Groq API key from [Groq Console](https://console.groq.com/)
+2. Replace the API key in the code:
+   ```python
+   groq_api_key="YOUR_GROQ_API_KEY_HERE"
+   ```
+
+### 6. Add Your Documents
+
+- Place material specification documents in the `data/` folder
+- Place electrical specification documents in the `electrical_data/` folder
+- Supported formats: PDF, TXT, CSV
+
+## Running the Application
+
+### Development Mode
+
+```bash
+python app.py
+```
+
+The application will start on `http://localhost:5000`
+
+### Production Deployment
+
+For production deployment, consider using:
+
+```bash
+# Using Gunicorn
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+
+# Using uWSGI
+pip install uwsgi
+uwsgi --http 0.0.0.0:5000 --module app:app
+```
+
+## Usage
+
+### Initial Setup
+
+1. **Access the Application**: Navigate to `http://localhost:5000`
+2. **Register an Account**: Create a new user account
+3. **Login**: Access the main interface
+
+### Using the Material Workspace
+
+1. **Upload Documents**: Use the upload feature to add PDF or image files
+2. **Chat Interface**: Ask questions about material specifications
+3. **PDF References**: Click on PDF references in responses to view documents
+4. **Session Management**: Each session maintains conversation history
+
+### Using the Electrical Workspace
+
+1. **Navigate to Electrical**: Click on electrical workspace
+2. **Upload Electrical Documents**: Add electrical specifications and standards
+3. **Query Electrical Systems**: Ask about electrical components, safety, and compliance
+4. **Technical Analysis**: Get detailed electrical engineering insights
+
+### Example Queries
+
+**Material Workspace:**
+- "What are the tensile strength requirements for Grade 316 stainless steel?"
+- "Find information about ASTM A240 standards"
+- "What are the corrosion resistance properties of aluminum alloys?"
+
+**Electrical Workspace:**
+- "What are the NEC requirements for electrical panel installation?"
+- "Find specifications for 480V motor control centers"
+- "What are the safety standards for electrical switchgear?"
 
 ## API Endpoints
 
-### Chat API
+### Authentication
+- `POST /login` - User login
+- `POST /register` - User registration
+- `GET /logout` - User logout
+
+### Material Workspace
+- `POST /chat` - Material specification chat
+- `POST /upload` - Upload material documents
+- `GET /history/<session_id>` - Get conversation history
+- `GET /api/stats` - Get usage statistics
+
+### Electrical Workspace
+- `POST /electrical/chat` - Electrical specification chat
+- `POST /electrical/upload` - Upload electrical documents
+- `GET /electrical/history/<session_id>` - Get electrical conversation history
+- `GET /api/electrical/stats` - Get electrical usage statistics
+
+### Document Serving
+- `GET /pdf/<filename>` - Serve PDF files
+
+## Configuration
+
+### Environment Variables
+
+Set these environment variables for optimal performance:
+
+```bash
+export TF_USE_LEGACY_KERAS=1
+export TF_ENABLE_ONEDNN_OPTS=0
+export TF_CPP_MIN_LOG_LEVEL=3
+export ANONYMIZED_TELEMETRY=False
+export CHROMA_TELEMETRY=False
 ```
-POST /api/chat
-Content-Type: application/json
 
-{
-  "message": "Your material specification query"
-}
+### Flask Configuration
+
+Key configuration options in `app.py`:
+
+```python
+app.secret_key = 'your-secret-key-change-this-in-production'
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 ```
-
-### Material Records API
-```
-POST /api/material-record
-Content-Type: application/json
-
-{
-  "wo_number": "WO-2024-001",
-  "mr_number": "MR-001-2024",
-  "status": "Active"
-}
-```
-
-### Statistics API
-```
-GET /api/stats
-
-Returns:
-{
-  "total_conversations": 150,
-  "avg_response_time": 1.2,
-  "total_materials": 45
-}
-```
-
-## Customization
-
-### Adding New Material Types
-1. Update the prompt template in `material_chatbot_app.py`
-2. Add new quick action buttons in the HTML template
-3. Create specific CSV templates for new material categories
-
-### Extending Database Schema
-1. Modify the `init_database()` function
-2. Add new API endpoints for additional data types
-3. Update the frontend dashboard accordingly
-
-### Styling Modifications
-The industrial color scheme uses:
-- Primary: `#05aff6` (bright blue)
-- Secondary: `#0c2c34` (dark blue-gray)
-- Accent: `#90defc` (light blue)
-- Background: `#1e303c` (medium blue-gray)
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **"TemplateNotFound" Error**
-   ```bash
-   # Ensure HTML file is in templates directory
-   ls templates/material_index.html
-   ```
-
-2. **"Invalid API Key" Error**
-   ```bash
-   # Check .env file
-   cat .env | grep GROQ_API_KEY
-   ```
-
-3. **No Documents Found**
-   ```bash
-   # Add documents to data folder
-   ls data/
-   ```
-
-4. **Port Already in Use**
-   ```bash
-   # Check if port 5000 is available
-   lsof -i :5000
-   ```
+1. **Import Errors**: Ensure all requirements are installed in virtual environment
+2. **TensorFlow Warnings**: Environment variables should suppress most warnings
+3. **ChromaDB Issues**: Delete `chroma_db_*` directories and restart if needed
+4. **API Key Errors**: Verify Groq API key is valid and has sufficient credits
 
 ### Performance Optimization
-- Place frequently accessed documents in data/
-- Use descriptive filenames for better retrieval
-- Regularly clean up old conversation logs
-- Monitor vector database size
+
+1. **Document Chunking**: Adjust chunk sizes in `RecursiveCharacterTextSplitter`
+2. **Model Selection**: Consider different HuggingFace embedding models
+3. **Database Optimization**: Regular cleanup of conversation history
+
+## Security Considerations
+
+1. **Change Default Secret Key**: Update `app.secret_key` for production
+2. **File Upload Security**: Validates file types and uses secure filenames
+3. **Session Security**: Implement proper session timeouts
+4. **API Key Management**: Store API keys in environment variables
 
 ## Contributing
 
@@ -248,16 +230,15 @@ The industrial color scheme uses:
 
 ## License
 
-This project is open source and follows the same license terms as your mental health chatbot project.
+This project is licensed under the MIT License.
 
 ## Support
 
-For issues or questions:
-1. Check the troubleshooting section
-2. Review the project structure
-3. Ensure all prerequisites are met
-4. Contact the development team
+For support and questions:
+- Check the troubleshooting section
+- Review the API documentation
+- Submit issues through the repository issue tracker
 
 ---
 
-**Ready to revolutionize your material specification identification process!** 🏭🚀
+**Note**: This application requires active internet connection for AI model inference through Groq API. Ensure your firewall allows outbound connections to Groq services.
