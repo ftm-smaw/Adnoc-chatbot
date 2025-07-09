@@ -228,10 +228,6 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 4. Test thoroughly
 5. Submit a pull request
 
-## License
-
-This project is open source and follows the same license terms as your mental health chatbot project.
-
 ## Support
 
 For support and questions:
