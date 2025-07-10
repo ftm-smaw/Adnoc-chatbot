@@ -99,7 +99,7 @@ The application uses Groq LLM API. You need to:
 ### Development Mode
 
 ```bash
-python app.py
+python material_chatbot_app.py
 ```
 
 The application will start on `http://localhost:5000`
