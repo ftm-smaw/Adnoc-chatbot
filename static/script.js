@@ -317,3 +317,44 @@ function showNotification(message, type) {
 window.addEventListener('resize', function() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
+
+let mediaRecorder;
+let audioChunks = [];
+let isRecording = false;
+
+const voiceBtn = document.getElementById("voiceBtn");
+
+voiceBtn.addEventListener("click", async () => {
+  if (!isRecording) {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+
+    mediaRecorder.ondataavailable = event => {
+      audioChunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const formData = new FormData();
+      formData.append("file", audioBlob, "recording.wav");
+      audio = AudioSegment.from_file(io.BytesIO(raw_audio), format="wav")
+
+      const response = await fetch("/speech", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      console.log("Transcription:", data);
+    };
+
+    mediaRecorder.start();
+    voiceBtn.classList.add("active");
+    isRecording = true;
+  } else {
+    mediaRecorder.stop();
+    voiceBtn.classList.remove("active");
+    isRecording = false;
+  }
+});

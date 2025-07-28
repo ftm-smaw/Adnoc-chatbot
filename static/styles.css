@@ -339,7 +339,7 @@ header p {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-#sendBtn {
+#sendBtn, #voiceBtn {
     width: 50px;
     height: 50px;
     background: #667eea;
@@ -353,12 +353,12 @@ header p {
     justify-content: center;
 }
 
-#sendBtn:hover {
+#sendBtn:hover, #voiceBtn:hover {
     background: #5a67d8;
     transform: translateY(-2px);
 }
 
-#sendBtn:disabled {
+#sendBtn:disabled, #voiceBtn:disabled {
     background: #ccc;
     cursor: not-allowed;
     transform: none;

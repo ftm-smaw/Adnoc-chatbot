@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
 import os
@@ -8,6 +7,7 @@ import openai
 import PyPDF2
 from werkzeug.utils import secure_filename
 import logging
+import speech_recognition as sr
 
 app = Flask(__name__)
 CORS(app)
@@ -215,5 +215,26 @@ def clear_pdfs(domain):
         logger.error(f"Error clearing PDFs: {str(e)}")
         return jsonify({'error': 'Failed to clear PDFs'}), 500
 
+@app.route('/speech', methods=['POST'])
+def speech():
+    recognizer = sr.Recognizer()
+    audio_file = request.files['file']
+
+    with sr.AudioFile(audio_file) as source:
+        audio = recognizer.record(source)
+
+    try:
+        text = recognizer.recognize_google(audio)
+        # You can now send 'text' to your chatbot logic
+        response = chatbot(text)  # Replace with your function
+        return jsonify({"user_input": text, "chatbot_response": response})
+
+    except sr.UnknownValueError:
+        return jsonify({"error": "Could not understand audio"})
+
+    except sr.RequestError as e:
+        return jsonify({"error": f"Speech service error: {e}"})
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    #app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
