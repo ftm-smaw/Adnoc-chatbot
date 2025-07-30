@@ -321,6 +321,7 @@ window.addEventListener('resize', function() {
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
+let stream;
 
 const voiceBtn = document.getElementById("voiceBtn");
 
@@ -335,10 +336,9 @@ voiceBtn.addEventListener("click", async () => {
     };
 
     mediaRecorder.onstop = async () => {
-      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
       const formData = new FormData();
-      formData.append("file", audioBlob, "recording.wav");
-      audio = AudioSegment.from_file(io.BytesIO(raw_audio), format="wav")
+      formData.append("file", audioBlob, "recording.webm");
 
       const response = await fetch("/speech", {
         method: "POST",

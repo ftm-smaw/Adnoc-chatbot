@@ -8,6 +8,7 @@ import PyPDF2
 from werkzeug.utils import secure_filename
 import logging
 import speech_recognition as sr
+from pydub import AudioSegment
 
 app = Flask(__name__)
 CORS(app)
@@ -218,16 +219,30 @@ def clear_pdfs(domain):
 @app.route('/speech', methods=['POST'])
 def speech():
     recognizer = sr.Recognizer()
+
+    # get user speech recording as webm file
     audio_file = request.files['file']
 
-    with sr.AudioFile(audio_file) as source:
+    # convert webm recording to wav(audio file)
+    audio = AudioSegment.from_file(audio_file, format="webm")
+    audio.export("converted.wav", format="wav")
+
+    # use converted audio file to transcribe input audio
+    with sr.AudioFile("converted.wav") as source:
         audio = recognizer.record(source)
 
     try:
+        #transcription
         text = recognizer.recognize_google(audio)
-        # You can now send 'text' to your chatbot logic
-        response = chatbot(text)  # Replace with your function
-        return jsonify({"user_input": text, "chatbot_response": response})
+
+        #send transcribed text and get response from chatbot
+        response = get_chatbot_response(text, domain, pdf_context)
+
+        return jsonify({
+            'response': response,
+            'domain': domain,
+            'timestamp': datetime.now().isoformat()
+        }), 200
 
     except sr.UnknownValueError:
         return jsonify({"error": "Could not understand audio"})
@@ -236,5 +251,4 @@ def speech():
         return jsonify({"error": f"Speech service error: {e}"})
 
 if __name__ == '__main__':
-    #app.run(debug=True, host='0.0.0.0', port=5000)
     app.run(debug=True, host='0.0.0.0', port=5001)
